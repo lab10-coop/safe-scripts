@@ -10,15 +10,15 @@
 const assert = require('assert');
 const Web3 = require('web3');
 const safeAbi = require('../GnosisSafe.abi');
-const ethUtil = require("ethereumjs-util")
+const ethUtil = require('ethereumjs-util');
 
 const web3 = new Web3('https://rpc.tau1.artis.network', null, { transactionConfirmationBlocks: 2 });
 
 const privKey = process.env.PRIVKEY;
-assert(privKey !== undefined);
+assert(privKey !== undefined, 'ENV var PRIVKEY missing');
 
 const safeAddr = process.env.SAFEADDR;
-assert(safeAddr !== undefined)
+assert(safeAddr !== undefined, 'ENV var SAFEADDR missing');
 
 const myAddr = web3.eth.accounts.privateKeyToAccount(`0x${privKey}`).address;
 console.log(`loaded private key for address ${myAddr}`);
@@ -36,13 +36,13 @@ async function main() {
 	// A valid Gnosis Safe account always returns this string. Now I know that there's indeed a Safe account at that address.
 
     // check if the account has enough funds. Parsing as number is a bit dirty (rounding errors), but does the job for this example
-    assert(Number.parseInt(await web3.eth.getBalance(safeAddr)) >= Number.parseInt(amountToBeSent));
+    assert(Number.parseInt(await web3.eth.getBalance(safeAddr)) >= Number.parseInt(amountToBeSent), 'Safe account low on funds');
 
     // check if I'm an owner of this Safe
-    assert((await safe.methods.getOwners().call()).indexOf(myAddr) >= 0);
+    assert((await safe.methods.getOwners().call()).indexOf(myAddr) >= 0, 'not owner of this Safe account');
     
     // check the signature threshold
-    assert(await safe.methods.getThreshold().call() === '1'); // yeah, in JS this returns a string...
+    assert(await safe.methods.getThreshold().call() === '1', 'signature threshold of Safe account != 1'); // yeah, in JS this returns a string...
     
     // we're ready to go
 
@@ -118,6 +118,7 @@ async function main() {
     console.log(`signedEthTx: ${JSON.stringify(signedEthTx, null, 2)}`);
 
     // ======= step 7: send/execute the Ethereum tx
+    // TODO: check if sender has enough funds for gas
     const receipt = await web3.eth.sendSignedTransaction(signedEthTx.rawTransaction);
 
     console.log(`receipt: ${JSON.stringify(receipt, null, 2)}`);
