@@ -31,9 +31,9 @@ const amountToBeSent = web3.utils.toWei('1'); // 1 native coin
 async function main() {
     // instantiate the Safe contract account
     const safe = new web3.eth.Contract(safeAbi, safeAddr) // address of an existing Safe account I'm owner of
-	// check if I have instantiated a Safe account
-	assert(await safe.methods.NAME().call() === 'Gnosis Safe');
-	// A valid Gnosis Safe account always returns this string. Now I know that there's indeed a Safe account at that address.
+    // check if I have instantiated a Safe account
+    assert(await safe.methods.NAME().call() === 'Gnosis Safe');
+    // A valid Gnosis Safe account always returns this string. Now I know that there's indeed a Safe account at that address.
 
     // check if the account has enough funds. Parsing as number is a bit dirty (rounding errors), but does the job for this example
     assert(Number.parseInt(await web3.eth.getBalance(safeAddr)) >= Number.parseInt(amountToBeSent), 'Safe account low on funds');
@@ -46,16 +46,16 @@ async function main() {
     
     // we're ready to go
 
-	// ======= step 1 (encode contract call) can be skipped as we're just transferring native coins
-	
-	// ======= step 2: create the data structure for the Safe tx
+    // ======= step 1 (encode contract call) can be skipped as we're just transferring native coins
 
-	// first, we need to get the current nonce of the Safe account
-	const safeNonce = await safe.methods.nonce().call();
+    // ======= step 2: create the data structure for the Safe tx
+
+    // first, we need to get the current nonce of the Safe account
+    const safeNonce = await safe.methods.nonce().call();
 
     let safeTxObj = {
-		to: exampleRecipient,
-		value: amountToBeSent,
+        to: exampleRecipient,
+        value: amountToBeSent,
         data: "0x", // no data
         operation: 0, // call
         safeTxGas: 50000, // depends on the complexity of the tx. In this case, it's a simple transfer
@@ -119,9 +119,12 @@ async function main() {
 
     // ======= step 7: send/execute the Ethereum tx
     // TODO: check if sender has enough funds for gas
+    console.log('sending tx...');
     const receipt = await web3.eth.sendSignedTransaction(signedEthTx.rawTransaction);
 
     console.log(`receipt: ${JSON.stringify(receipt, null, 2)}`);
+
+    console.log(`====== tx ${receipt.status ? 'succeeded' : 'failed'} ======`);
 }
 
 main();
