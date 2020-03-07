@@ -82,6 +82,7 @@ async function main() {
         Buffer.from(privKey, "hex"), // the private key we want to sign with
         0 // chainId. To be set to 0 for Safe tx.
     );
+    console.log(`sigObj: r: ${sigObj.r.toString('hex')}, s: ${sigObj.s.toString('hex')}, v: ${sigObj.v.toString(16)}`);
     // now we construct a hex string representation of that signature object
     const sigString = `0x${sigObj.r.toString("hex")}${sigObj.s.toString("hex")}${sigObj.v.toString(16)}`;
 
@@ -111,6 +112,7 @@ async function main() {
         gasPrice: 100000000000, // network dependent
         nonce: ethNonce
     };
+    console.log(`ethTxObj: ${JSON.stringify(ethTxObj, null, 2)}`);
 
     // ======= step 6: sign the Ethereum tx
     const signedEthTx = await web3.eth.accounts.signTransaction(ethTxObj, privKey)
