@@ -73,29 +73,10 @@ fun main(args: Array<String>) {
 
     // ======= step 4: encode a call of execTransaction() with the signed Safe tx object
 
-    //val execTx = safe.execTransaction(to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, sigByteArr).encodeABI()
-    // unfortunately, web3j offers no method "encodeABI()" like there is in web3.js.
-    // TODO: check if there's a more generic and less verbose solution
-    val signatures = sigByteArr // alias
-    // copied from GnosisSfafe wrapper class
-    val execTransactionFn = Function(
-        GnosisSafe.FUNC_EXECTRANSACTION,
-        Arrays.asList<Type<*>>(
-            Address(to),
-            Uint256(value),
-            DynamicBytes(data),
-            Uint8(operation),
-            Uint256(safeTxGas),
-            Uint256(baseGas),
-            Uint256(gasPrice),
-            Address(gasToken),
-            Address(refundReceiver),
-            DynamicBytes(signatures)
-        ), emptyList()
-    )
-    val ethTxData = FunctionEncoder.encode(execTransactionFn) // returns the abi-encoded hex string
+    // returns the abi-encoded hex string
+    val ethTxData = safe.execTransaction(to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, sigByteArr).encodeFunctionCall()
     println("encoded function: ${ethTxData}")
-
+    
     // ======= step 5: create the Ethereum transaction object
 
     val ethNonce = web3.ethGetTransactionCount(credentials.address, DefaultBlockParameterName.LATEST).send().transactionCount
