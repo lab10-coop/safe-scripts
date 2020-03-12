@@ -8,43 +8,19 @@ import org.web3j.abi.datatypes.generated.Uint8
 import org.web3j.crypto.*
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
-import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt
-import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.http.HttpService
 import org.web3j.tx.gas.StaticGasProvider
 import org.web3j.utils.Convert
 import org.web3j.utils.Numeric
 import java.math.BigInteger
 import java.util.*
-import kotlin.system.exitProcess
-
-// since assert() doesn't work out of the box (requires JVM option "-ea", don't know where to set)...
-fun myAssert(testValue: Boolean, errMsg: String) {
-    if(! testValue) {
-        println(errMsg)
-        exitProcess(1)
-    }
-}
-
-// TODO: check if there's a more elegant way to wait for the receipt
-fun getReceiptFor(web3: Web3j, txHash: String): TransactionReceipt {
-    while (true) {
-        val transactionReceipt: EthGetTransactionReceipt = web3
-            .ethGetTransactionReceipt(txHash)
-            .send()
-        if (transactionReceipt.result != null) {
-            return transactionReceipt.transactionReceipt.get()
-        }
-        Thread.sleep(1000)
-    }
-}
 
 fun main(args: Array<String>) {
     // init
     val safeAddr = System.getenv("SAFEADDR")
-    myAssert(safeAddr != null, "ENV var SAFEADDR missing")
+    Utils.myAssert(safeAddr != null, "ENV var SAFEADDR missing")
     val privKey = System.getenv("PRIVKEY")
-    myAssert(privKey != null, "ENV var PRIVKEY missing")
+    Utils.myAssert(privKey != null, "ENV var PRIVKEY missing")
 
     val exampleRecipient = "0x30B125d5Fc58c1b8E3cCB2F1C71a1Cc847f024eE"
     val amountToBeSent = Convert.toWei("1", Convert.Unit.ETHER).toBigInteger()
@@ -61,11 +37,11 @@ fun main(args: Array<String>) {
     val ecKeyPair = ECKeyPair.create(Numeric.hexStringToByteArray(privKey))
 
     // checks
-    myAssert(safe.NAME().send() == "Gnosis Safe", "Safe NAME() did not return 'Gnosis Safe'")
+    Utils.myAssert(safe.NAME().send() == "Gnosis Safe", "Safe NAME() did not return 'Gnosis Safe'")
     val safeBal = web3.ethGetBalance(safeAddr, DefaultBlockParameterName.LATEST).send().balance
-    myAssert(safeBal >= amountToBeSent, "Safe account low on funds")
-    myAssert(safe.owners.send().contains(credentials.address), "not owner of this Safe account")
-    myAssert(safe.threshold.send().equals(BigInteger.valueOf(1)), "signature threshold of Safe account != 1")
+    Utils.myAssert(safeBal >= amountToBeSent, "Safe account low on funds")
+    Utils.myAssert(safe.owners.send().contains(credentials.address), "not owner of this Safe account")
+    Utils.myAssert(safe.threshold.send().equals(BigInteger.valueOf(1)), "signature threshold of Safe account != 1")
 
     // ======= step 1 (encode contract call) can be skipped as we're just transferring native coins
 
@@ -88,7 +64,7 @@ fun main(args: Array<String>) {
 
     val safeTxHash = safe.getTransactionHash(to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, _nonce).send()
     println("safeTxHash: ${Numeric.toHexString(safeTxHash)}")
-    myAssert(Numeric.toHexString(safeTxHash).length == 66, "safeTxHash has wrong length")
+    Utils.myAssert(Numeric.toHexString(safeTxHash).length == 66, "safeTxHash has wrong length")
 
     val sig = Sign.signMessage(safeTxHash, ecKeyPair, false)
     // Kotlin conventiently has a + operator for concatenating ByteArrays
@@ -134,7 +110,7 @@ fun main(args: Array<String>) {
     val txHash = web3.ethSendRawTransaction(Numeric.toHexString(signedEthTx)).send().transactionHash
     println("txHash: ${txHash}")
     println("waiting for receipt...")
-    val receipt = getReceiptFor(web3, txHash)
+    val receipt = Utils.getReceiptFor(web3, txHash)
     println("====== tx " + (if (receipt.status == "0x1") "succeeded" else "failed") + " ======")
-    println("receipt: ${getReceiptFor(web3, txHash).toString()}")
+    println("receipt: ${Utils.getReceiptFor(web3, txHash).toString()}")
 }
