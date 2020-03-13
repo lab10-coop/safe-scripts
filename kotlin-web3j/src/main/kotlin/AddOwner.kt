@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
     Utils.myAssert(safe.threshold.send().equals(BigInteger.valueOf(1)), "signature threshold of Safe account != 1")
     Utils.myAssert(!safe.owners.send().contains(exampleNewOwner.toLowerCase()), "${exampleNewOwner} is already an owner")
 
-    // ======= step 1 (encode contract call) can be skipped as we're just transferring native coins
+    // ======= step 1 (encode contract call)
 
     val safeTxData = safe.addOwnerWithThreshold(exampleNewOwner, BigInteger.valueOf(1)).encodeFunctionCall()
     println("safeTxData: ${safeTxData}")

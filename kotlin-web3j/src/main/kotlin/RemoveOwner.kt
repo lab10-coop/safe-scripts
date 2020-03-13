@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
     Utils.myAssert(safe.owners.send().contains(exampleOwnerToBeRemoved.toLowerCase()), "${exampleOwnerToBeRemoved} is not an owner")
     Utils.myAssert(safe.owners.send().size > 1, "${exampleOwnerToBeRemoved} is the only owner")
 
-    // ======= step 1 (encode contract call) can be skipped as we're just transferring native coins
+    // ======= step 1 (encode contract call)
 
     val safeSentinelAddr = "0x0000000000000000000000000000000000000001" // unfortunately not made public by contract
     val owners = safe.owners.send()
