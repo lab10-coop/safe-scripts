@@ -91,7 +91,7 @@ fun main(args: Array<String>) {
     println("txHash: ${txHash}")
     println("waiting for receipt...")
     val receipt = Utils.getReceiptFor(web3, txHash)
-    println("====== tx " + (if (receipt.status == "0x1") "succeeded" else "failed") + " ======")
+    println("====== ETH tx " + (if (receipt.status == "0x1") "succeeded" else "failed") + " ======")
     println("receipt: ${Utils.getReceiptFor(web3, txHash).toString()}")
     println("====== Safe tx " + (if (safe.getExecutionSuccessEvents(receipt).size > 0) "succeeded" else "failed") + " ======")
 }
