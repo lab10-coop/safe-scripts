@@ -20,9 +20,8 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
-import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.methods.request.EthFilter;
-import org.web3j.protocol.core.methods.response.BaseEventResponse;
 import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple2;
@@ -37,9 +36,8 @@ import org.web3j.tx.gas.ContractGasProvider;
  * or the org.web3j.codegen.SolidityFunctionWrapperGenerator in the 
  * <a href="https://github.com/web3j/web3j/tree/master/codegen">codegen module</a> to update.
  *
- * <p>Generated with web3j version 4.5.6.
+ * <p>Generated with web3j version 4.2.0.
  */
-@SuppressWarnings("rawtypes")
 public class GnosisSafe extends Contract {
     private static final String BINARY = "Bin file was not provided";
 
@@ -551,46 +549,46 @@ public class GnosisSafe extends Contract {
         return signMsgEventFlowable(filter);
     }
 
-    public RemoteFunctionCall<String> NAME() {
+    public RemoteCall<String> NAME() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_NAME, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    public RemoteFunctionCall<String> VERSION() {
+    public RemoteCall<String> VERSION() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_VERSION, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> addOwnerWithThreshold(String owner, BigInteger _threshold) {
+    public RemoteCall<TransactionReceipt> addOwnerWithThreshold(String owner, BigInteger _threshold) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDOWNERWITHTHRESHOLD, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, owner), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(owner), 
                 new org.web3j.abi.datatypes.generated.Uint256(_threshold)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<BigInteger> approvedHashes(String param0, byte[] param1) {
+    public RemoteCall<BigInteger> approvedHashes(String param0, byte[] param1) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_APPROVEDHASHES, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, param0), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(param0), 
                 new org.web3j.abi.datatypes.generated.Bytes32(param1)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> changeMasterCopy(String _masterCopy) {
+    public RemoteCall<TransactionReceipt> changeMasterCopy(String _masterCopy) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CHANGEMASTERCOPY, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _masterCopy)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_masterCopy)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> changeThreshold(BigInteger _threshold) {
+    public RemoteCall<TransactionReceipt> changeThreshold(BigInteger _threshold) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CHANGETHRESHOLD, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_threshold)), 
@@ -598,34 +596,34 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> disableModule(String prevModule, String module) {
+    public RemoteCall<TransactionReceipt> disableModule(String prevModule, String module) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_DISABLEMODULE, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, prevModule), 
-                new org.web3j.abi.datatypes.Address(160, module)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(prevModule), 
+                new org.web3j.abi.datatypes.Address(module)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<byte[]> domainSeparator() {
+    public RemoteCall<byte[]> domainSeparator() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_DOMAINSEPARATOR, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> enableModule(String module) {
+    public RemoteCall<TransactionReceipt> enableModule(String module) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ENABLEMODULE, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, module)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(module)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> execTransactionFromModule(String to, BigInteger value, byte[] data, BigInteger operation) {
+    public RemoteCall<TransactionReceipt> execTransactionFromModule(String to, BigInteger value, byte[] data, BigInteger operation) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_EXECTRANSACTIONFROMMODULE, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation)), 
@@ -633,10 +631,10 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> execTransactionFromModuleReturnData(String to, BigInteger value, byte[] data, BigInteger operation) {
+    public RemoteCall<TransactionReceipt> execTransactionFromModuleReturnData(String to, BigInteger value, byte[] data, BigInteger operation) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_EXECTRANSACTIONFROMMODULERETURNDATA, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation)), 
@@ -644,18 +642,18 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<String> getBeaconAddress() {
+    public RemoteCall<String> getBeaconAddress() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETBEACONADDRESS, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
-    public RemoteFunctionCall<List> getModules() {
+    public RemoteCall<List> getModules() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETMODULES, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<DynamicArray<Address>>() {}));
-        return new RemoteFunctionCall<List>(function,
+        return new RemoteCall<List>(
                 new Callable<List>() {
                     @Override
                     @SuppressWarnings("unchecked")
@@ -666,12 +664,12 @@ public class GnosisSafe extends Contract {
                 });
     }
 
-    public RemoteFunctionCall<Tuple2<List<String>, String>> getModulesPaginated(String start, BigInteger pageSize) {
+    public RemoteCall<Tuple2<List<String>, String>> getModulesPaginated(String start, BigInteger pageSize) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETMODULESPAGINATED, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, start), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(start), 
                 new org.web3j.abi.datatypes.generated.Uint256(pageSize)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<DynamicArray<Address>>() {}, new TypeReference<Address>() {}));
-        return new RemoteFunctionCall<Tuple2<List<String>, String>>(function,
+        return new RemoteCall<Tuple2<List<String>, String>>(
                 new Callable<Tuple2<List<String>, String>>() {
                     @Override
                     public Tuple2<List<String>, String> call() throws Exception {
@@ -683,11 +681,11 @@ public class GnosisSafe extends Contract {
                 });
     }
 
-    public RemoteFunctionCall<List> getOwners() {
+    public RemoteCall<List> getOwners() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETOWNERS, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<DynamicArray<Address>>() {}));
-        return new RemoteFunctionCall<List>(function,
+        return new RemoteCall<List>(
                 new Callable<List>() {
                     @Override
                     @SuppressWarnings("unchecked")
@@ -698,118 +696,118 @@ public class GnosisSafe extends Contract {
                 });
     }
 
-    public RemoteFunctionCall<BigInteger> getThreshold() {
+    public RemoteCall<BigInteger> getThreshold() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETTHRESHOLD, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
-    public RemoteFunctionCall<Boolean> isOwner(String owner) {
+    public RemoteCall<Boolean> isOwner(String owner) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISOWNER, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, owner)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(owner)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
-    public RemoteFunctionCall<BigInteger> nonce() {
+    public RemoteCall<BigInteger> nonce() {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_NONCE, 
                 Arrays.<Type>asList(), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> removeOwner(String prevOwner, String owner, BigInteger _threshold) {
+    public RemoteCall<TransactionReceipt> removeOwner(String prevOwner, String owner, BigInteger _threshold) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEOWNER, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, prevOwner), 
-                new org.web3j.abi.datatypes.Address(160, owner), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(prevOwner), 
+                new org.web3j.abi.datatypes.Address(owner), 
                 new org.web3j.abi.datatypes.generated.Uint256(_threshold)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> setFallbackHandler(String handler) {
+    public RemoteCall<TransactionReceipt> setFallbackHandler(String handler) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETFALLBACKHANDLER, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, handler)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(handler)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<BigInteger> signedMessages(byte[] param0) {
+    public RemoteCall<BigInteger> signedMessages(byte[] param0) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_SIGNEDMESSAGES, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(param0)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> swapOwner(String prevOwner, String oldOwner, String newOwner) {
+    public RemoteCall<TransactionReceipt> swapOwner(String prevOwner, String oldOwner, String newOwner) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SWAPOWNER, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, prevOwner), 
-                new org.web3j.abi.datatypes.Address(160, oldOwner), 
-                new org.web3j.abi.datatypes.Address(160, newOwner)), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(prevOwner), 
+                new org.web3j.abi.datatypes.Address(oldOwner), 
+                new org.web3j.abi.datatypes.Address(newOwner)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> setup(List<String> _owners, BigInteger _threshold, String to, byte[] data, String fallbackHandler, String paymentToken, BigInteger payment, String paymentReceiver) {
+    public RemoteCall<TransactionReceipt> setup(List<String> _owners, BigInteger _threshold, String to, byte[] data, String fallbackHandler, String paymentToken, BigInteger payment, String paymentReceiver) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETUP, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
                         org.web3j.abi.Utils.typeMap(_owners, org.web3j.abi.datatypes.Address.class)), 
                 new org.web3j.abi.datatypes.generated.Uint256(_threshold), 
-                new org.web3j.abi.datatypes.Address(160, to), 
+                new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
-                new org.web3j.abi.datatypes.Address(160, fallbackHandler), 
-                new org.web3j.abi.datatypes.Address(160, paymentToken), 
+                new org.web3j.abi.datatypes.Address(fallbackHandler), 
+                new org.web3j.abi.datatypes.Address(paymentToken), 
                 new org.web3j.abi.datatypes.generated.Uint256(payment), 
-                new org.web3j.abi.datatypes.Address(160, paymentReceiver)), 
+                new org.web3j.abi.datatypes.Address(paymentReceiver)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> setupWithBeacon(List<String> _owners, BigInteger _threshold, String to, byte[] data, String fallbackHandler, String paymentToken, BigInteger payment, String paymentReceiver, String beaconContract) {
+    public RemoteCall<TransactionReceipt> setupWithBeacon(List<String> _owners, BigInteger _threshold, String to, byte[] data, String fallbackHandler, String paymentToken, BigInteger payment, String paymentReceiver, String beaconContract) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETUPWITHBEACON, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
                         org.web3j.abi.Utils.typeMap(_owners, org.web3j.abi.datatypes.Address.class)), 
                 new org.web3j.abi.datatypes.generated.Uint256(_threshold), 
-                new org.web3j.abi.datatypes.Address(160, to), 
+                new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
-                new org.web3j.abi.datatypes.Address(160, fallbackHandler), 
-                new org.web3j.abi.datatypes.Address(160, paymentToken), 
+                new org.web3j.abi.datatypes.Address(fallbackHandler), 
+                new org.web3j.abi.datatypes.Address(paymentToken), 
                 new org.web3j.abi.datatypes.generated.Uint256(payment), 
-                new org.web3j.abi.datatypes.Address(160, paymentReceiver), 
-                new org.web3j.abi.datatypes.Address(160, beaconContract)), 
+                new org.web3j.abi.datatypes.Address(paymentReceiver), 
+                new org.web3j.abi.datatypes.Address(beaconContract)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> execTransaction(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, byte[] signatures) {
+    public RemoteCall<TransactionReceipt> execTransaction(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, byte[] signatures) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_EXECTRANSACTION, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation), 
                 new org.web3j.abi.datatypes.generated.Uint256(safeTxGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(baseGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(gasPrice), 
-                new org.web3j.abi.datatypes.Address(160, gasToken), 
-                new org.web3j.abi.datatypes.Address(160, refundReceiver), 
+                new org.web3j.abi.datatypes.Address(gasToken), 
+                new org.web3j.abi.datatypes.Address(refundReceiver), 
                 new org.web3j.abi.datatypes.DynamicBytes(signatures)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> requiredTxGas(String to, BigInteger value, byte[] data, BigInteger operation) {
+    public RemoteCall<TransactionReceipt> requiredTxGas(String to, BigInteger value, byte[] data, BigInteger operation) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REQUIREDTXGAS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation)), 
@@ -817,7 +815,7 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> approveHash(byte[] hashToApprove) {
+    public RemoteCall<TransactionReceipt> approveHash(byte[] hashToApprove) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_APPROVEHASH, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(hashToApprove)), 
@@ -825,7 +823,7 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> signMessage(byte[] _data) {
+    public RemoteCall<TransactionReceipt> signMessage(byte[] _data) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SIGNMESSAGE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicBytes(_data)), 
@@ -833,7 +831,7 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> isValidSignature(byte[] _data, byte[] _signature) {
+    public RemoteCall<TransactionReceipt> isValidSignature(byte[] _data, byte[] _signature) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ISVALIDSIGNATURE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicBytes(_data), 
@@ -842,40 +840,40 @@ public class GnosisSafe extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<byte[]> getMessageHash(byte[] message) {
+    public RemoteCall<byte[]> getMessageHash(byte[] message) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETMESSAGEHASH, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicBytes(message)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
-    public RemoteFunctionCall<byte[]> encodeTransactionData(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, BigInteger _nonce) {
+    public RemoteCall<byte[]> encodeTransactionData(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, BigInteger _nonce) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ENCODETRANSACTIONDATA, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation), 
                 new org.web3j.abi.datatypes.generated.Uint256(safeTxGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(baseGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(gasPrice), 
-                new org.web3j.abi.datatypes.Address(160, gasToken), 
-                new org.web3j.abi.datatypes.Address(160, refundReceiver), 
+                new org.web3j.abi.datatypes.Address(gasToken), 
+                new org.web3j.abi.datatypes.Address(refundReceiver), 
                 new org.web3j.abi.datatypes.generated.Uint256(_nonce)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<DynamicBytes>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
-    public RemoteFunctionCall<byte[]> getTransactionHash(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, BigInteger _nonce) {
+    public RemoteCall<byte[]> getTransactionHash(String to, BigInteger value, byte[] data, BigInteger operation, BigInteger safeTxGas, BigInteger baseGas, BigInteger gasPrice, String gasToken, String refundReceiver, BigInteger _nonce) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETTRANSACTIONHASH, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, to), 
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(to), 
                 new org.web3j.abi.datatypes.generated.Uint256(value), 
                 new org.web3j.abi.datatypes.DynamicBytes(data), 
                 new org.web3j.abi.datatypes.generated.Uint8(operation), 
                 new org.web3j.abi.datatypes.generated.Uint256(safeTxGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(baseGas), 
                 new org.web3j.abi.datatypes.generated.Uint256(gasPrice), 
-                new org.web3j.abi.datatypes.Address(160, gasToken), 
-                new org.web3j.abi.datatypes.Address(160, refundReceiver), 
+                new org.web3j.abi.datatypes.Address(gasToken), 
+                new org.web3j.abi.datatypes.Address(refundReceiver), 
                 new org.web3j.abi.datatypes.generated.Uint256(_nonce)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
@@ -899,57 +897,81 @@ public class GnosisSafe extends Contract {
         return new GnosisSafe(contractAddress, web3j, transactionManager, contractGasProvider);
     }
 
-    public static class AddedOwnerEventResponse extends BaseEventResponse {
+    public static class AddedOwnerEventResponse {
+        public Log log;
+
         public String owner;
     }
 
-    public static class ApproveHashEventResponse extends BaseEventResponse {
+    public static class ApproveHashEventResponse {
+        public Log log;
+
         public byte[] approvedHash;
 
         public String owner;
     }
 
-    public static class ChangedMasterCopyEventResponse extends BaseEventResponse {
+    public static class ChangedMasterCopyEventResponse {
+        public Log log;
+
         public String masterCopy;
     }
 
-    public static class ChangedThresholdEventResponse extends BaseEventResponse {
+    public static class ChangedThresholdEventResponse {
+        public Log log;
+
         public BigInteger threshold;
     }
 
-    public static class DisabledModuleEventResponse extends BaseEventResponse {
+    public static class DisabledModuleEventResponse {
+        public Log log;
+
         public String module;
     }
 
-    public static class EnabledModuleEventResponse extends BaseEventResponse {
+    public static class EnabledModuleEventResponse {
+        public Log log;
+
         public String module;
     }
 
-    public static class ExecutionFailureEventResponse extends BaseEventResponse {
+    public static class ExecutionFailureEventResponse {
+        public Log log;
+
         public byte[] txHash;
 
         public BigInteger payment;
     }
 
-    public static class ExecutionFromModuleFailureEventResponse extends BaseEventResponse {
+    public static class ExecutionFromModuleFailureEventResponse {
+        public Log log;
+
         public String module;
     }
 
-    public static class ExecutionFromModuleSuccessEventResponse extends BaseEventResponse {
+    public static class ExecutionFromModuleSuccessEventResponse {
+        public Log log;
+
         public String module;
     }
 
-    public static class ExecutionSuccessEventResponse extends BaseEventResponse {
+    public static class ExecutionSuccessEventResponse {
+        public Log log;
+
         public byte[] txHash;
 
         public BigInteger payment;
     }
 
-    public static class RemovedOwnerEventResponse extends BaseEventResponse {
+    public static class RemovedOwnerEventResponse {
+        public Log log;
+
         public String owner;
     }
 
-    public static class SignMsgEventResponse extends BaseEventResponse {
+    public static class SignMsgEventResponse {
+        public Log log;
+
         public byte[] msgHash;
     }
 }

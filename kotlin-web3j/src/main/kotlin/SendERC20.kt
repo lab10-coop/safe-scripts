@@ -1,3 +1,10 @@
+import org.web3j.abi.FunctionEncoder
+import org.web3j.abi.datatypes.Address
+import org.web3j.abi.datatypes.DynamicBytes
+import org.web3j.abi.datatypes.Function
+import org.web3j.abi.datatypes.Type
+import org.web3j.abi.datatypes.generated.Uint256
+import org.web3j.abi.datatypes.generated.Uint8
 import org.web3j.crypto.*
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
@@ -7,6 +14,7 @@ import org.web3j.tx.gas.StaticGasProvider
 import org.web3j.utils.Convert
 import org.web3j.utils.Numeric
 import java.math.BigInteger
+import java.util.*
 
 fun main(args: Array<String>) {
     // init
@@ -41,7 +49,18 @@ fun main(args: Array<String>) {
 
     // ======= step 1 (encode contract call)
 
-    val safeTxData = erc20.transfer(exampleRecipient, amountToBeSent).encodeFunctionCall()
+    // This would work with a more recent version of web3j
+    //val safeTxData = erc20.transfer(exampleRecipient, amountToBeSent).encodeFunctionCall()
+
+    val innerFn = Function(
+        ERC20.FUNC_TRANSFER,
+        Arrays.asList<Type<*>>(
+            Address(exampleRecipient),
+            Uint256(amountToBeSent)
+        ), emptyList()
+    )
+    val safeTxData = FunctionEncoder.encode(innerFn) // returns the abi-encoded hex string
+
     println("safeTxData: ${safeTxData}")
 
     // ======= step 2: create the data structure for the Safe tx
@@ -72,8 +91,27 @@ fun main(args: Array<String>) {
 
     // ======= step 4: encode a call of execTransaction() with the signed Safe tx object
 
-    // returns the abi-encoded hex string
-    val ethTxData = safe.execTransaction(to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, sigByteArr).encodeFunctionCall()
+    // This would work with a more recent version of web3j
+    //val ethTxData = safe.execTransaction(to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, sigByteArr).encodeFunctionCall()
+
+    val signatures = sigByteArr // alias
+    // copied from GnosisSfafe wrapper class
+    val execTransactionFn = Function(
+        GnosisSafe.FUNC_EXECTRANSACTION,
+        Arrays.asList<Type<*>>(
+            Address(to),
+            Uint256(value),
+            DynamicBytes(data),
+            Uint8(operation),
+            Uint256(safeTxGas),
+            Uint256(baseGas),
+            Uint256(gasPrice),
+            Address(gasToken),
+            Address(refundReceiver),
+            DynamicBytes(signatures)
+        ), emptyList()
+    )
+    val ethTxData = FunctionEncoder.encode(execTransactionFn) // returns the abi-encoded hex string
     println("encoded function: ${ethTxData}")
 
     // ======= step 5: create the Ethereum transaction object
