@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile ('org.web3j:core:4.2.0')
+    compile ('org.web3j:core:4.6.0')
 //    implementation "com.github.komputing.kethereum:bip39"
 }
 
