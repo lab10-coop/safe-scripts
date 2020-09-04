@@ -9,6 +9,7 @@ import org.web3j.crypto.*
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
+import org.web3j.protocol.websocket.WebSocketService
 import org.web3j.tx.gas.StaticGasProvider
 import org.web3j.utils.Convert
 import org.web3j.utils.Numeric
@@ -31,7 +32,9 @@ fun main(args: Array<String>) {
     val credentials = Credentials.create(privKey)
     println("loaded private key for address: ${credentials.address}")
 
-    val web3 = Web3j.build(HttpService("https://rpc.tau1.artis.network"))
+    val wsService = WebSocketService("wss://ws.tau1.artis.network", false)
+    wsService.connect()
+    val web3 = Web3j.build(wsService)
     val safe = GnosisSafe.load(safeAddr, web3, credentials, gasProvider)
 
     val ecKeyPair = ECKeyPair.create(Numeric.hexStringToByteArray(privKey))
